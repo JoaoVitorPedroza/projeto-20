@@ -3,22 +3,19 @@
 import { QueryResult } from 'pg';
 import db from '../database/index';
 import { RechargeDB, RechargeRequestDTO } from '../protocols/RechargeProtocol';
-
-// Helper function para converter snake_case para camelCase
 function toRechargeDB(row: any): RechargeDB {
     return {
         id: row.id,
         phoneId: row.phone_id,
         amount: row.amount,
-        // 🎯 CORREÇÃO AQUI: Use o nome exato do banco
         rechargeDate: row.data_hora_recharge,
     };
 }
 /**
  * Registra uma nova recarga.
- * @param phoneId O ID do telefone (FK)
- * @param amount O valor da recarga
- * @returns O registro completo da recarga criada
+ * @param phoneId O telefone (FK)
+ * @param amount O valor da recargaz
+ * @returns O registro das recargas criaadas
  */
 async function createRecharge(phoneId: number, amount: number): Promise<RechargeDB> {
     const result: QueryResult<any> = await db.query(
@@ -36,7 +33,6 @@ async function createRecharge(phoneId: number, amount: number): Promise<Recharge
 }
 
 /**
- * Busca o histórico de recargas para um determinado telefone.
  * @param phoneId O ID do telefone
  * @returns Um array de recargas
  */
@@ -58,9 +54,6 @@ interface SummaryData {
     totalAmount: number;
 }
 
-/**
- * Calcula o número total e o valor total de todas as recargas.
- */
 async function getGlobalSummary(): Promise<SummaryData> {
     const result: QueryResult<any> = await db.query(
         `
@@ -74,9 +67,7 @@ async function getGlobalSummary(): Promise<SummaryData> {
     const row = result.rows[0];
 
     return {
-        // COUNT retorna um string em alguns drivers (ex: pg), convertemos para número
         totalRecharges: parseInt(row.totalRecharges) || 0,
-        // SUM retorna um string/decimal, convertemos para float
         totalAmount: parseFloat(row.totalAmount) || 0,
     };
 }
@@ -84,5 +75,5 @@ async function getGlobalSummary(): Promise<SummaryData> {
 export const rechargeRepository = {
     createRecharge,
     findRechargesByPhone,
-    getGlobalSummary, // <-- Adicionado
+    getGlobalSummary,
 }

@@ -8,7 +8,6 @@ export class NotFoundError extends Error {
     this.name = "NotFoundError";
   }
 }
-
 export class ConflictError extends Error {
   statusCode = 409;
   constructor(message: string) {
@@ -16,9 +15,7 @@ export class ConflictError extends Error {
     this.name = "ConflictError";
   }
 }
-
 const MAX_PHONES_PER_CLIENT = 3;
-
 /**
  * @param phoneData Os dados do telefone e cliente
  * @returns O registro do telefone criado

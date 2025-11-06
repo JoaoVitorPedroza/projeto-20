@@ -2,7 +2,7 @@
 import connection from '../database/index';
 
 /**
- * Busca todas as recargas feitas, juntando dados do telefone e cliente.
+ * craa uma nova recarga para um telefone específico.
  * @returns {Promise<any[]>} Lista de todas as recargas.
  */
 export async function findAllRecharges() {
@@ -26,7 +26,6 @@ export async function findAllRecharges() {
     return result.rows;
 }
 /**
- * Busca o total gasto e o número total de recargas.
  * @returns {Promise<{ sum: string, count: string }>} O resumo financeiro.
  */
 export async function getRechargesSummary() {
@@ -37,8 +36,5 @@ export async function getRechargesSummary() {
         FROM 
             recharges;
     `);
-
-    // Retorna a primeira linha, que conterá a soma e a contagem.
-    // Os tipos são string porque são retornados do PostgreSQL como string em agregações.
     return result.rows[0];
 }

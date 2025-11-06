@@ -4,7 +4,6 @@ import { NextFunction, Request, Response } from "express";
 export function validateSchema<T>(schema: ObjectSchema<T>) {
   return (req: Request, res: Response, next: NextFunction) => {
     const { error, value } = schema.validate(req.body, { abortEarly: false });
-
     if (error) {
       const details = error.details.map((d) => d.message);
       const validationError = new Error("Erro de validação de dados.");
@@ -13,7 +12,6 @@ export function validateSchema<T>(schema: ObjectSchema<T>) {
 
       throw validationError;
     }
-
     req.body = value;
     next();
   };

@@ -9,10 +9,7 @@ export type PhoneRequestDTO = {
     description: string;
 };
 export interface PhoneDB {
-    // 🎯 Adicione ESTA linha se estiver faltando!
     id: number;
-
-    // Outros campos devem estar em camelCase se o seu repositório mapeia:
     clientDocument: string;
     phoneNumber: string;
     carrierName: string;

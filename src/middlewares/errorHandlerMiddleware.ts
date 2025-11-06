@@ -1,6 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
 import { ConflictError, NotFoundError } from '../services/phoneService';
-
 export function errorHandlerMiddleware(
   error: Error,
   req: Request,

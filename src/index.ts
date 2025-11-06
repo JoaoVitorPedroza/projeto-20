@@ -21,13 +21,10 @@ app.get('/recharges', async (req: Request, res: Response) => {
 app.get('/summary', async (req: Request, res: Response) => {
     try {
         const summary = await getRechargesSummary();
-
-        // Retorna 200 OK com o resumo
         return res.status(200).send(summary);
 
     } catch (error) {
         console.error(error);
-        // Retorna 500 em caso de erro no banco de dados
         return res.status(500).send({ message: "Erro ao buscar resumo." });
     }
 });

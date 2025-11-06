@@ -25,3 +25,20 @@ export async function findAllRecharges() {
     `);
     return result.rows;
 }
+/**
+ * Busca o total gasto e o número total de recargas.
+ * @returns {Promise<{ sum: string, count: string }>} O resumo financeiro.
+ */
+export async function getRechargesSummary() {
+    const result = await connection.query(`
+        SELECT 
+            SUM(amount) AS totalAmountSpent, 
+            COUNT(id) AS totalRechargesCount 
+        FROM 
+            recharges;
+    `);
+
+    // Retorna a primeira linha, que conterá a soma e a contagem.
+    // Os tipos são string porque são retornados do PostgreSQL como string em agregações.
+    return result.rows[0];
+}

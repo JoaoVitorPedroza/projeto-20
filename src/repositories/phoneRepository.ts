@@ -1,4 +1,3 @@
-
 import db from "../database/index";
 import { PhoneDB, PhoneRequestDTO } from "../protocols/PhoneProtocol";
 import { QueryResult } from "pg";
@@ -66,8 +65,26 @@ async function createPhone(phoneData: PhoneRequestDTO): Promise<PhoneDB> {
   return toPhoneDB(result.rows[0]);
 }
 
+// 🎯 NOVA FUNÇÃO: Colocada no nível superior, fora de qualquer outra função.
+/**
+ * Busca todos os telefones cadastrados no banco de dados.
+ * @returns Um array de objetos PhoneDB.
+ */
+async function findAllPhones(): Promise<PhoneDB[]> {
+  const result: QueryResult<any> = await db.query(
+    `SELECT id, client_document, phone_number, carrier_name, name, description FROM phones;`
+  );
+
+  // Mapeia cada linha para o tipo PhoneDB
+  return result.rows.map(toPhoneDB);
+}
+// ----------------------------------------------------------------------
+
+
+// 🎯 EXPORTAÇÃO CORRIGIDA: Lista todas as funções
 export const phoneRepository = {
   countClientPhones,
   findByPhoneNumber,
   createPhone,
+  findAllPhones, // Agora incluída corretamente!
 };

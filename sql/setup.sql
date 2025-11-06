@@ -25,11 +25,8 @@ CREATE TABLE phones (
     description VARCHAR(255) NOT NULL
 );
 CREATE TABLE recharges (
-    id SERIAL PRIMARY KEY,
-    phone_id INTEGER NOT NULL REFERENCES phones(id),
-    user_id INTEGER NOT NULL,
-    amount INTEGER NOT NULL,
-    fee INTEGER NOT NULL,
-    timestamp TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT NOW(),
-    status VARCHAR(50) NOT NULL DEFAULT 'Success'
+  id SERIAL PRIMARY KEY,
+  phone_id INTEGER REFERENCES phones(id) NOT NULL,
+  amount NUMERIC NOT NULL,
+  data_hora_recharge TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );

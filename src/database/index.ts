@@ -1,37 +1,27 @@
-// src/database/index.ts
-
-import 'dotenv/config'; // Garante que as variáveis de ambiente sejam carregadas
+import 'dotenv/config';
 import pg from 'pg';
 
-// A string de conexão será pega da variável de ambiente DATABASE_URL
-// Essa variável é essencial para o deploy no Render
 const { Pool } = pg;
-let connectionString = process.env.DATABASE_URL;
 
 // Verifica se a variável de ambiente existe
-if (!connectionString) {
-  console.error("Variável de ambiente DATABASE_URL não definida!");
-  // Em ambiente de produção, seria um erro fatal
-  throw new Error("DATABASE_URL is not set.");
+if (!process.env.DATABASE_URL) {
+  console.error("Variável de ambiente DATABASE_URL não definida!");
+  throw new Error("DATABASE_URL is not set.");
 }
 
-// Configuração opcional para o Render (quando for fazer o deploy)
-// if (process.env.NODE_ENV === "production") {
-//   connectionString = {
-//     connectionString: process.env.DATABASE_URL,
-//     ssl: {
-//       rejectUnauthorized: false
-//     }
-//   };
-// }
+// Configuração que usa a variável de ambiente e força SSL
+const config = {
+    connectionString: process.env.DATABASE_URL,
+    // 🎯 Essencial para o Render: resolve o erro 'SSL/TLS REQUIRED'
+    ssl: {
+        rejectUnauthorized: false,
+    }
+};
 
-
-// Cria o pool de conexões com o PostgreSQL
-const db = new Pool({
-  connectionString
-});
+// Cria o pool de conexões com a configuração correta
+const db = new Pool(config);
 
 console.log("Conectado ao PostgreSQL com sucesso.");
 
-// Exporta o pool para que os Repositórios possam executar queries
+// Exporta o pool
 export default db;

@@ -13,7 +13,6 @@ export const rechargeController = {
     const { phoneNumber, amount } = req.body as RechargeRequestDTO;
 
     try {
-      // 1. Verificar se o telefone existe
       const phone: PhoneDB | null = await phoneRepository.findByPhoneNumber(
         phoneNumber
       );

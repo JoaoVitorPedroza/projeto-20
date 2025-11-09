@@ -22,7 +22,10 @@ export const rechargeController = {
         return res.status(400).send({ message: "O valor da recarga deve ser positivo." });
       }
 
-      const newRecharge: RechargeDB = await rechargeRepository.createRecharge(phone.id, amount);
+      const newRecharge: RechargeDB = await rechargeRepository.createRecharge({
+    phoneId: phone.id, // Envie como objeto
+    amount: amount      // Envie como objeto
+         });
 
       return res.status(201).send(newRecharge);
 

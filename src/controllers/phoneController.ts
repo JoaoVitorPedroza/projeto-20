@@ -1,28 +1,50 @@
-// src/controllers/phoneController.ts
-import { Request, Response } from "express";
-import { clientRepository } from "../repositories/clientRepository";
-import { phoneRepository } from "../repositories/phoneRepository";
-import { PhoneDB, PhoneRequestDTO } from "../protocols/PhoneProtocol";
-export const phoneController = {
-  async createPhone(req: Request, res: Response): Promise<Response> {
-    const phoneData = req.body as PhoneRequestDTO;
+import { Request, Response, NextFunction } from "express";
+import * as phoneService from "../services/phoneService"; // Usar phoneService para lógica de negócio
+import { PhoneRequestDTO } from "../protocols/PhoneProtocol";
+// Importe outras dependências como *phoneRepository se necessário
 
+export const phoneController = {
+  // 1. CRIAÇÃO DE TELEFONE (POST /phones)
+  async createPhone(req: Request, res: Response, next: NextFunction): Promise<Response | void> {
+    const phoneData = req.body as PhoneRequestDTO;
     try {
-      return res
-        .status(201)
-        .send({ message: "Implementar lógica de sucesso aqui." });
+      const newPhone = await phoneService.createPhone(phoneData);
+      return res.status(201).send(newPhone);
     } catch (error) {
-      console.error(error);
-      return res.status(500).send({ message: "Erro interno do servidor." });
+      next(error);
     }
   },
-  async getPhones(req: Request, res: Response): Promise<Response> {
+
+  // 2. LISTAGEM DE TELEFONES (GET /phones) - CORREÇÃO DO ERRO TS2339
+  // Assumindo que você tem uma função para listar todos os telefones.
+  async listPhones(req: Request, res: Response, next: NextFunction): Promise<Response | void> {
     try {
-      const phones: PhoneDB[] = await phoneRepository.findAllPhones();
+      // ATENÇÃO: Se o seu serviço não tem findAllPhones, use a função correta.
+      // Substituí a chamada incorreta (que causou o erro TS2339) por uma listagem de exemplo.
+      const phones = await phoneService.listAllPhones();
+
+      // Se a sua listagem é por documento, você deve usar:
+      // const { clientDocument } = req.query;
+      // const phones = await phoneService.findByClientDocument(clientDocument as string);
+
       return res.status(200).send(phones);
     } catch (error) {
-      console.error(error);
-      return res.status(500).send({ message: "Erro ao buscar telefones." });
+      next(error);
+    }
+  },
+
+  // 3. EXCLUSÃO DE TELEFONE (DELETE /phones/:phoneNumber)
+  async deletePhone(req: Request, res: Response, next: NextFunction): Promise<Response | void> {
+    try {
+      const { phoneNumber } = req.params;
+
+      // Assumindo que o Service implementa a validação e a exclusão
+      await phoneService.removePhoneByNumber(phoneNumber);
+
+      // 204 No Content para exclusão bem-sucedida
+      return res.status(204).send();
+    } catch (error) {
+      next(error);
     }
   },
 };

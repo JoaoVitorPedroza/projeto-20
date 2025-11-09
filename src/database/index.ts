@@ -1,16 +1,28 @@
-import 'dotenv/config';
+// src/database/index.ts (VERSÃO FINAL)
 import pg from 'pg';
 const { Pool } = pg;
-if (!process.env.DATABASE_URL) {
-  console.error("Variável de ambiente DATABASE_URL não definida!");
-  throw new Error("DATABASE_URL is not set.");
-}
+import 'dotenv/config';
+console.log('DEBUG: DATABASE_URL lida pelo Node:', process.env.DATABASE_URL);
+const useSSL = process.env.DATABASE_URL?.includes('localhost') ? false : { rejectUnauthorized: false };
+
 const config = {
-    connectionString: process.env.DATABASE_URL,
-    ssl: {
-        rejectUnauthorized: false,
-    }
+    connectionString: process.env.DATABASE_URL,
+
+    ssl: { rejectUnauthorized: false }
 };
-const db = new Pool(config);
-console.log("Conectado ao PostgreSQL com sucesso.");
-export default db;
+
+const connectionStringWithSSL = process.env.DATABASE_URL + '?sslmode=require';
+
+const connection = new Pool({
+    connectionString: connectionStringWithSSL,
+    ssl: { rejectUnauthorized: false }
+});
+
+connection.connect()
+    .then(() => console.log('✅ Conectado ao PostgreSQL com sucesso!'))
+    .catch(err => {
+        // Agora, o erro será exibido
+        console.error('❌ Erro na conexão com PostgreSQL:', err.message);
+    });
+
+export default connection;

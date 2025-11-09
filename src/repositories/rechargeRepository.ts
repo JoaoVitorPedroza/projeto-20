@@ -1,6 +1,5 @@
 
 import connection from '../database/index';
-// Placeholder types (se você não estiver usando um arquivo Protocol)
 type RechargeRequestDTO = any;
 type RechargeDB = any;
 
@@ -31,9 +30,9 @@ export async function findAllRecharges(): Promise<any[]> {
 }
 
 /**
- * Cria uma nova recarga para um telefone específico.
+ * Criar uma nova recarga para um telefone específico.
  * @param {object} rechargeData - Dados da recarga (phoneId, amount).
- * @returns {Promise<RechargeDB>} O registro da recarga criada.
+ * @returns {Promise<RechargeDB>} O registro da recarga criada x.
  */
 export async function createRecharge(rechargeData: { phoneId: number, amount: number }): Promise<RechargeDB> {
     const { phoneId, amount } = rechargeData;
@@ -67,7 +66,7 @@ export async function findRechargesByPhone(phoneId: number): Promise<any[]> {
 
 /**
  * Obtém o resumo financeiro das recargas.
- * @returns {Promise<{ totalAmountSpent: string, totalRechargesCount: string }>} O resumo financeiro.
+ * @returns {Promise<{ totalAmountSpent: string, totalRechargesCount: string }>} 
  */
 export async function getRechargesSummary(): Promise<any> {
     const result = await connection.query(`

@@ -7,7 +7,6 @@ export class ConflictError extends Error {
     }
 }
 
-// Erro para recursos não encontrados (Status 404)
 export class NotFoundError extends Error {
     statusCode = 404;
     constructor(message: string) {

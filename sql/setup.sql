@@ -1,3 +1,5 @@
+TRUNCATE TABLE recharges RESTART IDENTITY; -- Limpa a tabela de recargas
+TRUNCATE TABLE phones RESTART IDENTITY;   -- Limpa a tabela de telefones
 DROP TABLE IF EXISTS recharges;
 DROP TABLE IF EXISTS phones;
 DROP TABLE IF EXISTS clients;

@@ -16,9 +16,6 @@ export async function createPhone(phoneData: any): Promise<any> {
     return result.rows[0];
 }
 
-// -------------------------------------------------------------
-// FUNÇÃO DE BUSCA GERAL (GET /phones) - CORREÇÃO CRÍTICA AQUI
-// -------------------------------------------------------------
 export async function getPhones(): Promise<any[]> {
     const result = await connection.query(
         `
@@ -34,8 +31,6 @@ export async function getPhones(): Promise<any[]> {
     );
     return result.rows;
 }
-// -------------------------------------------------------------
-
 
 export async function findByPhoneNumber(phoneNumber: string): Promise<any | null> {
     const result = await connection.query(
@@ -79,7 +74,6 @@ export async function deleteByPhoneNumber(phoneNumber: string): Promise<void> {
 
 export const phoneRepository = {
     createPhone,
-    // INCLUSÃO OBRIGATÓRIA DA FUNÇÃO NA EXPORTAÇÃO
     getPhones,
     findByPhoneNumber,
     findByClientDocument,

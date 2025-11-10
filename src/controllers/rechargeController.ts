@@ -23,8 +23,8 @@ export const rechargeController = {
       }
 
       const newRecharge: RechargeDB = await rechargeRepository.createRecharge({
-    phoneId: phone.id, // Envie como objeto
-    amount: amount      // Envie como objeto
+    phoneId: phone.id,
+    amount: amount      
          });
 
       return res.status(201).send(newRecharge);

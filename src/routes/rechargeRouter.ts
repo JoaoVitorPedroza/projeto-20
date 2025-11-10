@@ -7,7 +7,7 @@ import { rechargeSchema } from '../schemas/rechargeSchema';
 
 const rechargeRouter = Router();
 
-// ROTA CORRIGIDA: Usa '/' para que a rota final seja POST /recharges
+// ROTA
 rechargeRouter.post('/', validateSchema(rechargeSchema.create), async (req: Request, res: Response, next: NextFunction) => {
     try {
         const rechargeData = req.body;
@@ -18,7 +18,7 @@ rechargeRouter.post('/', validateSchema(rechargeSchema.create), async (req: Requ
     }
 });
 
-// ROTA CORRIGIDA: Usa '/' para que a rota final seja GET /recharges
+// ROTA
 rechargeRouter.get('/', async (req: Request, res: Response, next: NextFunction) => {
     try {
         const recharges = await findAllRecharges();
@@ -28,7 +28,7 @@ rechargeRouter.get('/', async (req: Request, res: Response, next: NextFunction) 
     }
 });
 
-// ROTA CORRIGIDA: A rota /summary está correta, resultando em GET /recharges/summary
+// ROTA
 rechargeRouter.get('/summary', async (req: Request, res: Response, next: NextFunction) => {
     try {
         const summary = await getRechargesSummary();
@@ -38,7 +38,7 @@ rechargeRouter.get('/summary', async (req: Request, res: Response, next: NextFun
     }
 });
 
-// ROTA CORRIGIDA: A rota /:phoneNumber está correta, resultando em GET /recharges/:phoneNumber
+// ROTA 
 rechargeRouter.get('/:phoneNumber', async (req: Request, res: Response, next: NextFunction) => {
     try {
         const { phoneNumber } = req.params;

@@ -65,8 +65,8 @@ export async function findRechargesByPhone(phoneId: number): Promise<any[]> {
 }
 
 /**
- * Obtém o resumo financeiro das recargas.
- * @returns {Promise<{ totalAmountSpent: string, totalRechargesCount: string }>} 
+ * Obtém o resumo financeiro das recargaz.
+ * @returns {Promise<{ totalAmountSpent: string, totalRechargesCount: string }>}
  */
 export async function getRechargesSummary(): Promise<any> {
     const result = await connection.query(`

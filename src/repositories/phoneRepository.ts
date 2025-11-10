@@ -1,4 +1,3 @@
-
 import connection from '../database/index';
 
 export async function createPhone(phoneData: any): Promise<any> {
@@ -16,6 +15,27 @@ export async function createPhone(phoneData: any): Promise<any> {
     );
     return result.rows[0];
 }
+
+// -------------------------------------------------------------
+// FUNÇÃO DE BUSCA GERAL (GET /phones) - CORREÇÃO CRÍTICA AQUI
+// -------------------------------------------------------------
+export async function getPhones(): Promise<any[]> {
+    const result = await connection.query(
+        `
+        SELECT 
+            id, 
+            client_document AS clientDocument, 
+            phone_number AS phoneNumber, 
+            carrier_name AS carrierName, 
+            name, 
+            description 
+        FROM "public"."phones"; 
+        `
+    );
+    return result.rows;
+}
+// -------------------------------------------------------------
+
 
 export async function findByPhoneNumber(phoneNumber: string): Promise<any | null> {
     const result = await connection.query(
@@ -56,9 +76,12 @@ export async function deleteByPhoneNumber(phoneNumber: string): Promise<void> {
     );
 }
 
+
 export const phoneRepository = {
     createPhone,
+    // INCLUSÃO OBRIGATÓRIA DA FUNÇÃO NA EXPORTAÇÃO
+    getPhones,
     findByPhoneNumber,
     findByClientDocument,
     deleteByPhoneNumber,
-};
+}

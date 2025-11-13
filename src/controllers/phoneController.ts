@@ -38,7 +38,7 @@ export const phoneController = {
 
       await phoneService.removePhoneByNumber(phoneNumber);
 
-      
+
       return res.status(204).send();
     } catch (error) {
       next(error);

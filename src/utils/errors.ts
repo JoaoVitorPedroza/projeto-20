@@ -1,25 +1,30 @@
-// src/utils/errors.ts (APENAS CLASSES)
-
-class HttpError extends Error {
+export class AppError extends Error {
     public status: number;
+
     constructor(message: string, status: number) {
         super(message);
-        this.name = this.constructor.name;
         this.status = status;
-        if (Error.captureStackTrace) {
-            Error.captureStackTrace(this, this.constructor);
-        }
-    }
-}
-export { HttpError };
-export class NotFoundError extends HttpError {
-    constructor(message: string = 'Recurso não encontrado.') {
-        super(message, 404);
+        this.name = 'AppError';
     }
 }
 
-export class ConflictError extends HttpError {
-    constructor(message: string = 'O recurso já existe ou há um conflito de dados.') {
+export class NotFoundError extends AppError {
+    constructor(message: string = "Recurso não encontrado.") {
+        super(message, 404);
+        this.name = 'NotFoundError';
+    }
+}
+
+export class ConflictError extends AppError {
+    constructor(message: string = "Conflito de dados.") {
         super(message, 409);
+        this.name = 'ConflictError';
+    }
+}
+
+export class UnauthorizedError extends AppError {
+    constructor(message: string = "Não autorizado.") {
+        super(message, 401);
+        this.name = 'UnauthorizedError';
     }
 }

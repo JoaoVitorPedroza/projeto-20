@@ -1,14 +1,14 @@
-// src/protocols/PhoneProtocol.ts
-export type OperatorName = 'Vivo' | 'Tim' | 'Oi' | 'Claro';
-export interface PhoneDB { /* ... */ }
-export type PhoneRequestDTO = {
+// O DTO de requisição (o que o usuário envia no POST)
+export interface PhoneRequestDTO {
     clientDocument: string;
     phoneNumber: string;
-    carrierName: 'Vivo' | 'Tim' | 'Oi' | 'Claro';
+    carrierName: string;
     name: string;
     description: string;
-};
-export interface PhoneDB {
+}
+
+// O Protocolo do Telefone (o que é retornado do banco, tipado)
+export interface PhoneProtocol {
     id: number;
     clientDocument: string;
     phoneNumber: string;

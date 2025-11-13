@@ -1,26 +1,29 @@
-// src/middlewares/errorHandlerMiddleware.ts
-
 import { Request, Response, NextFunction } from 'express';
-import { HttpError } from '../utils/errors';
+import { AppError } from '../utils/errors';
 
-export function errorHandlerMiddleware(err: HttpError | any, req: Request, res: Response, next: NextFunction) {
-    if (err.status) {
-        console.error(`[STATUS ${err.status}]: ${err.message}`);
-        return res.status(err.status).send({ message: err.message });
-    }
-
-    if (err.details) {
-        console.error(`[STATUS 422]: Erro de validação: ${JSON.stringify(err.details)}`);
-        return res.status(422).send({
-            message: "Erro de validação de dados.",
-            details: err.details.map((d: any) => d.message)
+export function errorHandler(
+    error: Error,
+    req: Request,
+    res: Response,
+    next: NextFunction
+) {
+    if (error instanceof AppError) {
+        return res.status(error.status).send({
+            message: error.message
         });
     }
 
-    console.error("--- ERRO INTERNO NÃO TRATADO (500) ---");
-    console.error(err);
-    console.error("-----------------------------------------");
+    if (error.name === 'ValidationError') {
+        const validationError = error as any;
+        const messages = validationError.details.map((detail: any) => detail.message);
+        return res.status(422).send({
+            message: "Erro de validação. Verifique os campos.",
+            details: messages
+        });
+    }
 
-
-    return res.status(500).send({ message: "Erro interno do servidor." });
+    console.error("ERRO CRÍTICO NO SERVIDOR:", error);
+    return res.status(500).send({
+        message: "Erro interno do servidor. Não foi possível processar a requisição."
+    });
 }

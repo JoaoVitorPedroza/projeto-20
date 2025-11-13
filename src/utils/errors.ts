@@ -22,9 +22,9 @@ export class ConflictError extends AppError {
     }
 }
 
-export class UnauthorizedError extends AppError {
-    constructor(message: string = "Não autorizado.") {
-        super(message, 401);
-        this.name = 'UnauthorizedError';
+export class BadRequestError extends AppError { // <-- NOVO: Adicione o 400
+    constructor(message: string = "Requisição inválida.") {
+        super(message, 400);
+        this.name = 'BadRequestError';
     }
 }

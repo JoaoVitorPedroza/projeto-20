@@ -15,9 +15,10 @@ INSERT INTO carriers (name, code) VALUES ('Tim', 41);
 INSERT INTO carriers (name, code) VALUES ('Oi', 31);
 INSERT INTO carriers (name, code) VALUES ('Claro', 21);
 CREATE TABLE clients (
-    id SERIAL PRIMARY KEY,
-    document VARCHAR(14) NOT NULL UNIQUE
-);
+    id SERIAL PRIMARY KEY,
+    document VARCHAR(14) NOT NULL UNIQUE,
+    name VARCHAR(100) NOT NULL
+)
 CREATE TABLE phones (
     id SERIAL PRIMARY KEY,
     client_document VARCHAR(14) NOT NULL REFERENCES clients(document),

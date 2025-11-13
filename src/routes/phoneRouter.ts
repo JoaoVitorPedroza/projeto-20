@@ -13,7 +13,7 @@ phoneRouter.get('/', async (req: Request, res: Response, next: NextFunction) => 
     }
 });
 
-phoneRouter.post('/', validateSchema(phoneSchema.create), async (req: Request, res: Response, next: NextFunction) => {
+phoneRouter.post('/', validateSchema(phoneSchema), async (req: Request, res: Response, next: NextFunction) => {
     try {
         const phoneData = req.body;
         const newPhone = await phoneService.createPhone(phoneData);
@@ -21,7 +21,7 @@ phoneRouter.post('/', validateSchema(phoneSchema.create), async (req: Request, r
     } catch (error) {
         return next(error);
     }
-});
+})
 phoneRouter.delete('/:phoneNumber', async (req: Request, res: Response, next: NextFunction) => {
     const { phoneNumber } = req.params;
 

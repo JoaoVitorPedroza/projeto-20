@@ -1,10 +1,10 @@
 import { Router } from 'express';
 import { clientController } from '../controllers/clientController';
-// Não vamos adicionar validação por Joi agora para manter a simplicidade
 
 const clientRouter = Router();
 
-// Rota para inserir o cliente
-clientRouter.post('/clients', clientController.createClient);
+// A rota deve ser simplesmente /
+// Já que você monta o clientRouter na raiz (app.use('/', clientRouter))
+clientRouter.post('/', clientController.createClient);
 
 export default clientRouter;

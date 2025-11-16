@@ -40,21 +40,22 @@ export async function createClient(clientData: ClientProtocol): Promise<ClientPr
 }
 
 /**
- * @description NOVA FUNÇÃO: Deleta o cliente pelo documento.
+ * @description Deleta o cliente pelo documento. A exclusão em cascata (telefones/recargas)
+ * é tratada pelo esquema SQL do banco de dados (ON DELETE CASCADE).
  */
 export async function deleteClient(document: string): Promise<number> {
-    const result: QueryResult<any> = await connection.query(
-        `DELETE FROM clients WHERE document = $1;`,
-        [document]
-    );
+    const result: QueryResult<any> = await connection.query(
+        `DELETE FROM clients WHERE document = $1;`,
+        [document]
+    );
 
-    // Retorna o número de linhas afetadas (0 ou 1)
-    return result.rowCount;
+    // Retorna o número de linhas de clientes deletadas (0 ou 1)
+    return result.rowCount;
 }
 
 
 export const clientRepository = {
     createClient,
-    deleteClient, // <-- NOVO: A função de exclusão foi adicionada
+    deleteClient, // <-- NOVO: A função de exclusão foi adicionada
     // Adicione getClientByDocument se necessário
 };

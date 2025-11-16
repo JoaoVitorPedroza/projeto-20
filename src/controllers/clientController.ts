@@ -1,27 +1,21 @@
-import { Request, Response, NextFunction } from "express";
-import { clientRepository } from "../repositories/clientRepository";
-import { BadRequestError } from "../utils/errors"; // Importa o erro 400
+import { Request, Response, NextFunction } from 'express';
+// O service que lista telefones por cliente está no phoneService
+import * as phoneService from '../services/phoneService';
+// OBS: Você pode precisar importar o phoneService ou phoneController dependendo de como você exportou.
+// Assumindo que você exportou funções em phoneService:
 
 export const clientController = {
-    async createClient(req: Request, res: Response, next: NextFunction): Promise<Response | void> {
-        try {
-            const clientData = req.body;
-            const newClient = await clientRepository.createClient(clientData);
-           
-            // Lógica para duplicação (ON CONFLICT DO NOTHING)
-            if (newClient) {
-                return res.status(201).send(newClient); // Cliente novo
-            }
-            return res.status(200).send({ message: "Cliente já cadastrado." }); // Cliente existente
+    async listPhonesByDocument(req: Request, res: Response, next: NextFunction): Promise<Response | void> {
+        const { document } = req.params; // Captura o documento do cliente
 
-        } catch (error: any) {
-            // 🚨 TRATAMENTO DO ERRO 500 (Violacão de NOT NULL - Código PG '23502')
-            if (error && error.code === '23502') {
-                return next(new BadRequestError("Campos obrigatórios do cliente estão faltando."));
-            }
+        try {
+            // Chama a função existente no phoneService
+            const phones = await phoneService.listPhonesByClientDocument(document);
 
-            // Reenvia para o errorHandler global (que retornará 500 para outros erros)
-            next(error);
-        }
-    },
+            // Retorna a lista de telefones (ou array vazio se não encontrar)
+            return res.status(200).send(phones);
+        } catch (error) {
+            next(error);
+        }
+    },
 };

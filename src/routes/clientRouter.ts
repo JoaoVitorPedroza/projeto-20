@@ -3,8 +3,7 @@ import { clientController } from '../controllers/clientController';
 
 const clientRouter = Router();
 
-// A rota deve ser simplesmente /
-// Já que você monta o clientRouter na raiz (app.use('/', clientRouter))
-clientRouter.post('/', clientController.createClient);
+// Rota de listagem de telefones por documento do cliente
+clientRouter.get('/:document', clientController.listPhonesByDocument);
 
 export default clientRouter;

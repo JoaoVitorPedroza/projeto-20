@@ -2,8 +2,8 @@ import 'dotenv/config';
 import express from 'express';
 import 'express-async-errors';
 import phoneRouter from './routes/phoneRouter';
-import rechargeRouter from './routes/rechargeRouter'; // Mantido: Importa o roteador de recargas
-// Linha clientRouter removida
+import rechargeRouter from './routes/rechargeRouter';
+import clientRouter from './routes/clientRouter'; // <-- NOVO: Importa o roteador de clientes
 import { errorHandler } from './middlewares/errorHandlerMiddleware';
 import connection from './database';
 
@@ -14,7 +14,8 @@ const PORT = process.env.PORT || 5000;
 
 // IMPORTANTE: Montagem dos Routers
 app.use('/phones', phoneRouter);
-app.use('/recharges', rechargeRouter); // Rota /recharges
+app.use('/recharges', rechargeRouter);
+app.use('/clients', clientRouter); // <-- NOVO: Monta a rota /clients
 
 app.use(errorHandler);
 

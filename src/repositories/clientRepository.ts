@@ -22,21 +22,21 @@ async function findByDocument(document: string): Promise<ClientDB | null> {
 }
 
 export async function createClient(clientData: ClientProtocol): Promise<ClientProtocol> {
-    const { document, name } = clientData;
+    const { document, name } = clientData;
 
-    const result = await connection.query<ClientProtocol>(
-        `
-        INSERT INTO "public"."clients" 
-            (document, name)
-        VALUES 
-            ($1, $2)
-        ON CONFLICT (document) DO NOTHING
-        RETURNING *;
-        `,
-        [document, name]
-    );
+    const result = await connection.query<ClientProtocol>(
+        `
+        INSERT INTO "public"."clients" 
+            (document, name)
+        VALUES 
+            ($1, $2)
+        ON CONFLICT (document) DO NOTHING
+        RETURNING *;
+        `,
+        [document, name]
+    );
 
-    return result.rows[0] || clientData;
+    return result.rows[0] || clientData;
 }
 
 /**

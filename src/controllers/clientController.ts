@@ -1,19 +1,39 @@
 import { Request, Response, NextFunction } from 'express';
-// O service que lista telefones por cliente está no phoneService
+// Importa o phoneService, que contém a lógica para manipulação de telefones E clientes
 import * as phoneService from '../services/phoneService';
-// OBS: Você pode precisar importar o phoneService ou phoneController dependendo de como você exportou.
-// Assumindo que você exportou funções em phoneService:
 
 export const clientController = {
+    /**
+     * @description Lista todos os telefones de um cliente pelo documento.
+     * Requisito: Listagem dos telefones de um cliente /:document
+     */
     async listPhonesByDocument(req: Request, res: Response, next: NextFunction): Promise<Response | void> {
-        const { document } = req.params; // Captura o documento do cliente
+        const { document } = req.params;
 
         try {
-            // Chama a função existente no phoneService
+            // Utiliza a função existente para listar telefones por documento
             const phones = await phoneService.listPhonesByClientDocument(document);
 
-            // Retorna a lista de telefones (ou array vazio se não encontrar)
             return res.status(200).send(phones);
+        } catch (error) {
+            next(error);
+        }
+    },
+
+    /**
+     * @description Deleta um cliente pelo documento.
+     * Chamaremos a função deleteClient, que você precisará implementar no phoneService.
+     */
+    async deleteClient(req: Request, res: Response, next: NextFunction): Promise<Response | void> {
+        const { document } = req.params;
+
+        try {
+            // **Atenção**: Você precisará adicionar e implementar a função
+            // deleteClient no seu phoneService.ts
+            await phoneService.deleteClient(document);
+
+            // Retorna 204 No Content para indicar sucesso na exclusão
+            return res.status(204).send();
         } catch (error) {
             next(error);
         }

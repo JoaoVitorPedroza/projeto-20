@@ -10,7 +10,7 @@ export interface PhoneRequestDTO {
 // O Protocolo do Telefone (o que é retornado do banco, tipado)
 export interface PhoneProtocol {
     id: number;
-    clientDocument: string;
+    client_document: string;
     phoneNumber: string;
     carrierName: string;
     name: string;

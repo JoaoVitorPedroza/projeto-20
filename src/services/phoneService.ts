@@ -1,6 +1,6 @@
 import { phoneRepository } from '../repositories/phoneRepository';
 import { rechargeRepository } from '../repositories/rechargeRepository';
-import { clientRepository } from '../repositories/clientRepository'; // **NOVO**
+import { clientRepository } from '../repositories/clientRepository'; // Importado
 import { NotFoundError, ConflictError } from '../utils/errors';
 
 import { PhoneRequestDTO } from '../protocols/PhoneProtocol';
@@ -18,8 +18,8 @@ export async function listPhonesByClientDocument(clientDocument: string): Promis
 
 
 export async function createPhone(phoneData: PhoneRequestDTO): Promise<any> {
-    // Desestrutura para obter dados do telefone e do cliente
-    const { phoneNumber, client_document, name } = phoneData;
+    // 🚨 CORREÇÃO DE TIPAGEM: Usando 'clientDocument' (camelCase do DTO)
+    const { phoneNumber, clientDocument, name } = phoneData;
 
     // 1. Verifica se o telefone já existe
     const existingPhone = await phoneRepository.findByPhoneNumber(phoneNumber);
@@ -28,10 +28,9 @@ export async function createPhone(phoneData: PhoneRequestDTO): Promise<any> {
     }
 
     // 🚨 2. REGRA DE NEGÓCIO: GARANTIR A EXISTÊNCIA DO CLIENTE
-    // Cria o cliente se ele não existir (ON CONFLICT DO NOTHING no SQL),
-    // usando os dados do payload do telefone.
-    await clientRepository.createClient({ document: client_document, name });
-    // Isso resolve o erro de chave estrangeira (FK)
+    // Passa o 'clientDocument' (do DTO) para o repositório, que o mapeia para o campo 'document' do banco.
+    // Isso resolve o erro de chave estrangeira e segue a regra do professor.
+    await clientRepository.createClient({ document: clientDocument, name });
 
     // 3. Cria o telefone
     return phoneRepository.createPhone(phoneData);

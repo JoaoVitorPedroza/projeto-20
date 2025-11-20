@@ -12,39 +12,36 @@ export async function listAllPhones(): Promise<any[]> {
 
 
 export async function listPhonesByClientDocument(clientDocument: string): Promise<any[]> {
-    // Chama a função findByClientDocument do Repositório
+    // C
     return phoneRepository.findByClientDocument(clientDocument);
 }
 
 
 export async function createPhone(phoneData: PhoneRequestDTO): Promise<any> {
-    // 🚨 CORREÇÃO DE TIPAGEM: Usando 'clientDocument' (camelCase do DTO)
+    // T
     const { phoneNumber, clientDocument, name } = phoneData;
 
-    // 1. Verifica se o telefone já existe
+    // T
     const existingPhone = await phoneRepository.findByPhoneNumber(phoneNumber);
     if (existingPhone) {
         throw new ConflictError("Telefone já cadastrado.");
     }
-
-    // 🚨 2. REGRA DE NEGÓCIO: GARANTIR A EXISTÊNCIA DO CLIENTE
-    // Passa o 'clientDocument' (do DTO) para o repositório, que o mapeia para o campo 'document' do banco.
-    // Isso resolve o erro de chave estrangeira e segue a regra do professor.
+    // I
     await clientRepository.createClient({ document: clientDocument, name });
 
-    // 3. Cria o telefone
+    //I
     return phoneRepository.createPhone(phoneData);
 }
 
 
 export async function removePhoneByNumber(phoneNumber: string): Promise<void> {
-    // 1. Verifica se o telefone existe
+    // V
     const phone = await phoneRepository.findByPhoneNumber(phoneNumber);
     if (!phone) {
         throw new NotFoundError("Telefone não encontrado para exclusão.");
     }
 
-    // 2. Regra de Negócio: Verifica se há recargas associadas
+    // R
     const recharges = await rechargeRepository.findRechargesByPhone(phone.id);
     if (recharges && recharges.length > 0) {
         throw new ConflictError("Não é possível excluir o telefone. Existem recargas associadas.");
@@ -76,16 +73,12 @@ export async function rechargePhone(rechargeData: { phoneNumber: string, amount:
 }
 
 /**
- * @description NOVA FUNÇÃO: Deleta um cliente pelo documento.
- * Esta função é chamada pelo clientController.deleteClient.
+ * @description NOVA FUNÇÃO
+ * CHAMAR NO CLIENT
  */
 export async function deleteClient(clientDocument: string): Promise<void> {
-    // Apenas chama o clientRepository para executar a exclusão.
-    // O Repositório deve garantir que a exclusão em cascata (se definida no SQL) ou a exclusão manual
-    // dos telefones/recargas ocorra antes de deletar o cliente.
     await clientRepository.deleteClient(clientDocument);
-    // Nota: Não precisamos de tratamento de NotFoundError aqui, pois o Controller deve retornar 204
-    // mesmo que nada seja deletado (a menos que a regra de negócio exija um 404 explícito).
+
 }
 
 
@@ -96,7 +89,7 @@ export const phoneService = {
     removePhoneByNumber,
     listRechargesByPhone,
     rechargePhone,
-    deleteClient, // <-- NOVO: Adicionado ao objeto de exports
+    deleteClient, 
 }
 
 export default phoneService;

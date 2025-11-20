@@ -8,10 +8,9 @@ import { errorHandler } from '../middlewares/errorHandlerMiddleware';
 const app = express();
 app.use(express.json());
 
-app.use('/', clientRouter) // <-- NOVO: Rota para POST /clients
+app.use('/', clientRouter)
 app.use('/', phoneRouter);
 app.use('/', rechargeRouter);
 app.use(errorHandler);
 
 export default app;
-//verificar no fim de cada atualização

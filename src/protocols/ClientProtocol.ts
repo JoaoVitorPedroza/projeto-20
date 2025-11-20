@@ -1,12 +1,12 @@
 
 export interface ClientDB {
   id: number;
-  document: string; // Ex: CPF/CNPJ
+  document: string;
 }
 export interface ClientProtocol {
     document: string;
     name: string;
-    // Adicione outros campos necessários
+    
 }
 export interface ClientDB { /* ... */ }
 export interface ClientDB { /* ... */ }

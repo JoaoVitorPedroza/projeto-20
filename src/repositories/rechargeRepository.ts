@@ -5,8 +5,8 @@ type RechargeDB = any;
 
 
 /**
- * Lista todas as recargas, juntamente com informações do telefone e cliente.
- * @returns {Promise<any[]>} Lista de todas as recargas.
+ * L
+ * @returns {Promise<any[]>} L
  */
 export async function findAllRecharges(): Promise<any[]> {
     const result = await connection.query(`
@@ -30,9 +30,9 @@ export async function findAllRecharges(): Promise<any[]> {
 }
 
 /**
- * Criar uma nova recarga para um telefone específico.
- * @param {object} rechargeData - Dados da recarga (phoneId, amount).
- * @returns {Promise<RechargeDB>} O registro da recarga criada x.
+ * C
+ * @param {object} rechargeData - D
+ * @returns {Promise<RechargeDB>} O
  */
 export async function createRecharge(rechargeData: { phoneId: number, amount: number }): Promise<RechargeDB> {
     const { phoneId, amount } = rechargeData;
@@ -65,7 +65,7 @@ export async function findRechargesByPhone(phoneId: number): Promise<any[]> {
 }
 
 /**
- * Obtém o resumo financeiro das recargaz.
+ * O
  * @returns {Promise<{ totalAmountSpent: string, totalRechargesCount: string }>}
  */
 export async function getRechargesSummary(): Promise<any> {

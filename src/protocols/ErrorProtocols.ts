@@ -1,4 +1,4 @@
-// src/protocols/ErrorProtocols.ts
+
 export class ConflictError extends Error {
     statusCode = 409;
     constructor(message: string) {

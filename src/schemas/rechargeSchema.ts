@@ -2,10 +2,10 @@ import Joi from 'joi';
 
 export const rechargeSchema = {
     create: Joi.object({
-        // Campos OBRIGATÓRIOS para o DTO
+        // C
         phoneNumber: Joi.string()
             .required()
-            .length(11) // 11 dígitos
+            .length(11) //D
             .pattern(/^[0-9]+$/)
             .messages({
                 'string.empty': 'O número de telefone é obrigatório.',
@@ -26,7 +26,7 @@ export const rechargeSchema = {
                 'any.required': 'O valor da recarga é obrigatório.',
             }),
     })
-    // PERMITE CAMPOS EXTRAS: Garante que "clientDocument", "carrierName", e "carrierCode"
-    // passados no teste não causem erro 422.
+    // P
+    // P
     .unknown(true),
 };

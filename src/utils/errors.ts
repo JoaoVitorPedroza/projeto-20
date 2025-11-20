@@ -22,7 +22,7 @@ export class ConflictError extends AppError {
     }
 }
 
-export class BadRequestError extends AppError { // <-- NOVO: Adicione o 400
+export class BadRequestError extends AppError { 
     constructor(message: string = "Requisição inválida.") {
         super(message, 400);
         this.name = 'BadRequestError';

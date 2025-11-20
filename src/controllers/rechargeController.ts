@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { phoneRepository } from "../repositories/phoneRepository";
 import { rechargeRepository } from '../repositories/rechargeRepository';
 import { RechargeRequestDTO, RechargeDB } from "../protocols/RechargeProtocol";
-import { PhoneProtocol } from "../protocols/PhoneProtocol"; // PhoneProtocol é a importação correta
+import { PhoneProtocol } from "../protocols/PhoneProtocol";
 import { NextFunction } from "express";
 
 
@@ -11,7 +11,7 @@ export const rechargeController = {
     const { phoneNumber, amount } = req.body as RechargeRequestDTO;
 
     try {
-      // CORREÇÃO: Usar PhoneProtocol em vez de PhoneDB
+     
       const phone: PhoneProtocol | null = await phoneRepository.findByPhoneNumber(phoneNumber);
 
       if (!phone) {
@@ -30,7 +30,7 @@ export const rechargeController = {
       return res.status(201).send(newRecharge);
 
     } catch (error) {
-      return next(error);//adicionar o return
+      return next(error);
     }
   },
   async getRecharges(req: Request, res: Response, next: NextFunction): Promise<Response | void> {

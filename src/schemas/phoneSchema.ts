@@ -1,4 +1,4 @@
-// src/schemas/phoneSchema.ts
+
 //import Joi from 'joi';
 //import { PhoneRequestDTO, OperatorName } from '../protocols/PhoneProtocol'; // OK
 import Joi from 'joi';
@@ -7,7 +7,7 @@ const VALID_CARRIERS = ["Vivo", "Tim", "Claro", "Oi"];
 
 export const phoneSchema = Joi.object<PhoneRequestDTO>({
     clientDocument: Joi.string()
-        .pattern(/^[0-9]{11}$|^[0-9]{14}$/) // CPF (11) ou CNPJ (14)
+        .pattern(/^[0-9]{11}$|^[0-9]{14}$/)
         .required()
         .messages({
             'string.pattern.base': 'O documento do cliente deve ser um CPF ou CNPJ válido.',
@@ -15,7 +15,7 @@ export const phoneSchema = Joi.object<PhoneRequestDTO>({
         }),
 
     phoneNumber: Joi.string()
-        .pattern(/^[0-9]{11}$/) // Número de 11 dígitos
+        .pattern(/^[0-9]{11}$/) // N
         .required()
         .messages({
             'string.pattern.base': 'O número de telefone deve ter 11 dígitos.',
@@ -23,7 +23,7 @@ export const phoneSchema = Joi.object<PhoneRequestDTO>({
         }),
 
     carrierName: Joi.string()
-        .valid(...VALID_CARRIERS) // 2. Uso da constante VALID_CARRIERS
+        .valid(...VALID_CARRIERS) //U
         .required()
         .messages({
             'any.only': `O nome da operadora deve ser uma das seguintes: ${VALID_CARRIERS.join(', ')}.`,

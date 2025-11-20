@@ -3,7 +3,7 @@ import express from 'express';
 import 'express-async-errors';
 import phoneRouter from './routes/phoneRouter';
 import rechargeRouter from './routes/rechargeRouter';
-import clientRouter from './routes/clientRouter'; // <-- NOVO: Importa o roteador de clientes
+import clientRouter from './routes/clientRouter'; // M
 import { errorHandler } from './middlewares/errorHandlerMiddleware';
 import connection from './database';
 
@@ -12,10 +12,10 @@ app.use(express.json());
 
 const PORT = process.env.PORT || 5000;
 
-// IMPORTANTE: Montagem dos Routers
+// I
 app.use('/phones', phoneRouter);
 app.use('/recharges', rechargeRouter);
-app.use('/clients', clientRouter); // <-- NOVO: Monta a rota /clients
+app.use('/clients', clientRouter); // M
 
 app.use(errorHandler);
 

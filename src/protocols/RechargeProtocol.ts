@@ -1,7 +1,7 @@
-// src/protocols/RechargeProtocol.ts
+
 export interface RechargeRequestDTO {
     phoneNumber: string;
-    amount: number; 
+    amount: number;
 }
 export interface RechargeDB {
     id: number;

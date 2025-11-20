@@ -44,10 +44,10 @@ export async function createClient(clientData: ClientProtocol): Promise<ClientPr
  * é tratada pelo esquema SQL do banco de dados (ON DELETE CASCADE).
  */
 export async function deleteClient(document: string): Promise<number> {
-    const result: QueryResult<any> = await connection.query(
-        `DELETE FROM clients WHERE document = $1;`,
-        [document]
-    );
+    const result: QueryResult<any> = await connection.query(
+        `DELETE FROM clients WHERE document = $1;`,
+        [document]
+    );
 
     // Retorna o número de linhas de clientes deletadas (0 ou 1)
     return result.rowCount;

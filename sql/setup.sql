@@ -28,8 +28,8 @@ CREATE TABLE phones (
     description VARCHAR(255) NOT NULL
 );
 CREATE TABLE recharges (
-  id SERIAL PRIMARY KEY,
-  phone_id INTEGER REFERENCES phones(id) NOT NULL,
-  amount NUMERIC NOT NULL,
-  data_hora_recharge TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+  id SERIAL PRIMARY KEY,
+  phone_id INTEGER REFERENCES phones(id) ON DELETE CASCADE NOT NULL,
+  amount NUMERIC NOT NULL,
+  data_hora_recharge TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );

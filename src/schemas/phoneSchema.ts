@@ -1,6 +1,6 @@
 
 //import Joi from 'joi';
-//import { PhoneRequestDTO, OperatorName } from '../protocols/PhoneProtocol'; // OK
+//import { PhoneRequestDTO, OperatorName } from '../protocols/PhoneProtocol'; // O
 import Joi from 'joi';
 import { PhoneRequestDTO } from '../protocols/PhoneProtocol';
 const VALID_CARRIERS = ["Vivo", "Tim", "Claro", "Oi"];
